@@ -6,13 +6,13 @@ if [[ $(sysctl -n machdep.cpu.brand_string) =~ "Apple" ]]; then
   cd ios 
 
   if ! grep -q -F "build_settings[\"ONLY_ACTIVE_ARCH\"]" "Podfile"; then
-    sed -i '' -r -e "s/([ ]*)(config\.build_settings\[\"DEVELOPMENT_TEAM\"\].*)/\1\2\n\1config\.build_settings\[\"ONLY_ACTIVE_ARCH\"\] = \"NO\"/"  Podfile
+    sed -i '' -r -e "s/([ ]*)(target\.build_configurations\.each do \|config\|.*)/\1\2\n\1config\.build_settings\[\"ONLY_ACTIVE_ARCH\"\] = \"NO\"/"  Podfile
   fi
   if ! grep -q -F "build_settings[\"GCC_PREPROCESSOR_DEFINITIONS\"]" "Podfile"; then
-    sed -i '' -r -e "s/([ ]*)(config\.build_settings\[\"DEVELOPMENT_TEAM\"\].*)/\1\2\n\1config\.build_settings\[\"GCC_PREPROCESSOR_DEFINITIONS\"\] \|\|= \[\"\$\(inherited\)\", \"_LIBCPP_ENABLE_CXX17_REMOVED_UNARY_BINARY_FUNCTION\"\]/"  Podfile
+    sed -i '' -r -e "s/([ ]*)(target\.build_configurations\.each do \|config\|.*)/\1\2\n\1config\.build_settings\[\"GCC_PREPROCESSOR_DEFINITIONS\"\] \|\|= \[\"\$\(inherited\)\", \"_LIBCPP_ENABLE_CXX17_REMOVED_UNARY_BINARY_FUNCTION\"\]/"  Podfile
   fi
   if ! grep -q -F "build_settings[\"CODE_SIGNING_ALLOWED\"]" "Podfile"; then
-    sed -i '' -r -e "s/([ ]*)(config\.build_settings\[\"DEVELOPMENT_TEAM\"\].*)/\1\2\n\1config\.build_settings\[\"CODE_SIGNING_ALLOWED\"\] = \"NO\"/" Podfile
+    sed -i '' -r -e "s/([ ]*)(target\.build_configurations\.each do \|config\|.*)/\1\2\n\1config\.build_settings\[\"CODE_SIGNING_ALLOWED\"\] = \"NO\"/" Podfile
   fi
 
   pod deintegrate 
